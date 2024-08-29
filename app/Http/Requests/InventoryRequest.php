@@ -43,7 +43,7 @@ class InventoryRequest extends FormRequest
         return [
             'expiration_date.before' => 'The expiration date can not be a past date.',
             'quantity.required' => 'Quantity is mandatory.',
-            'quantity.lte' => 'Quantity must be greater than ZERO'
+            'quantity.lte' => 'Quantity must be greater than ZERO',
         ];
     }
 }

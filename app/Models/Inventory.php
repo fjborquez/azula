@@ -25,7 +25,7 @@ class Inventory extends Model
         'brand_id',
         'brand_name',
         'category_id',
-        'category_name'
+        'category_name',
     ];
 
     public function productStatus(): BelongsToMany
