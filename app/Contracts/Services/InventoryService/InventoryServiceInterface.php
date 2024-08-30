@@ -10,4 +10,6 @@ interface InventoryServiceInterface
     public function create(array $data = []): Inventory;
 
     public function getList(): Collection;
+
+    public function update(int $inventoryId, array $data = []): void;
 }
