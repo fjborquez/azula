@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Services\InventoryService\InventoryServiceInterface;
 use App\Http\Requests\InventoryRequest;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class InventoryController extends Controller
