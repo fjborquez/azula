@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Services\InventoryService\InventoryServiceInterface;
 use App\Http\Requests\InventoryRequest;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class InventoryController extends Controller
@@ -22,5 +23,10 @@ class InventoryController extends Controller
 
         return response()->noContent(Response::HTTP_CREATED)
             ->header('Location', url('/api/user/'.$inventory->id));
+    }
+
+    public function list()
+    {
+        return $this->inventoryService->getList();
     }
 }
