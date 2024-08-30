@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Services\InventoryService\InventoryServiceInterface;
+use App\Exceptions\ResourceNotFoundException;
 use App\Http\Requests\InventoryRequest;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,5 +28,18 @@ class InventoryController extends Controller
     public function list()
     {
         return $this->inventoryService->getList();
+    }
+
+    public function update(int $inventoryId, InventoryRequest $request)
+    {
+        $data = $request->safe()->only($this->fields);
+
+        try {
+            $this->inventoryService->update($inventoryId, $data);
+
+            return response()->noContent(Response::HTTP_NO_CONTENT);
+        } catch (ResourceNotFoundException $exception) {
+            return response()->noContent(Response::HTTP_NOT_FOUND);
+        }
     }
 }
