@@ -23,4 +23,9 @@ class InventoryController extends Controller
         return response()->noContent(Response::HTTP_CREATED)
             ->header('Location', url('/api/user/'.$inventory->id));
     }
+
+    public function list()
+    {
+        return $this->inventoryService->getList();
+    }
 }
