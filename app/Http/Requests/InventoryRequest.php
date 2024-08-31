@@ -29,11 +29,11 @@ class InventoryRequest extends FormRequest
             'category_id' => ['required'],
             'category_name' => ['required'],
             'purchase_date' => [],
-            'brand_id' => [],
+            'brand_id' => ['gte:0'],
             'brand_name' => [],
-            'uom_id' => [],
+            'uom_id' => ['gte:0'],
             'uom_abbreviation' => [],
-            'house_id' => [],
+            'house_id' => ['gte:0'],
             'house_description' => [],
         ];
     }
