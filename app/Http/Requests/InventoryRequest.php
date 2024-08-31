@@ -23,16 +23,16 @@ class InventoryRequest extends FormRequest
     {
         return [
             'quantity' => ['required'],
-            'expiration_date' => ['before:tomorrow'],
+            'expiration_date' => ['after:yesterday'],
             'catalog_id' => ['required', 'gte:0'],
             'catalog_description' => ['required'],
             'category_id' => ['required'],
             'category_name' => ['required'],
             'purchase_date' => [],
             'brand_id' => [],
-            'brand_description' => [],
+            'brand_name' => [],
             'uom_id' => [],
-            'uom_description' => [],
+            'uom_abbreviation' => [],
             'house_id' => [],
             'house_description' => [],
         ];
@@ -41,7 +41,7 @@ class InventoryRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'expiration_date.before' => 'The expiration date can not be a past date.',
+            'expiration_date.after' => 'The expiration date can not be a past date.',
             'quantity.required' => 'Quantity is mandatory.',
             'quantity.lte' => 'Quantity must be greater than ZERO',
         ];
