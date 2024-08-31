@@ -6,7 +6,6 @@ use App\Contracts\Services\InventoryService\InventoryServiceInterface;
 use App\Exceptions\ResourceNotFoundException;
 use App\Models\Inventory;
 use Illuminate\Database\Eloquent\Collection;
-use InvalidArgumentException;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
