@@ -14,11 +14,11 @@ class ProductStatusSeeder extends Seeder
     {
         if (DB::table('product_status')->count() == 0) {
             DB::table('product_status')->insert([
-                ['id' => 1, 'description' => 'Fresh'],
-                ['id' => 2, 'description' => 'Approaching Expiry'],
-                ['id' => 3, 'description' => 'Expired'],
-                ['id' => 4, 'description' => 'Consumed'],
-                ['id' => 5, 'description' => 'Discarded'],
+                ['id' => 1, 'description' => 'Fresh', 'is_final_phase' => false],
+                ['id' => 2, 'description' => 'Approaching Expiry', 'is_final_phase' => false],
+                ['id' => 3, 'description' => 'Expired', 'is_final_phase' => false],
+                ['id' => 4, 'description' => 'Consumed', 'is_final_phase' => true],
+                ['id' => 5, 'description' => 'Discarded', 'is_final_phase' => true],
             ]);
         }
     }
