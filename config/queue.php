@@ -82,7 +82,7 @@ return [
             'subscriber' => 'azula-api',
             'create_topics' => true,
             'create_subscriptions' => true,
-],
+        ],
 
     ],
 
