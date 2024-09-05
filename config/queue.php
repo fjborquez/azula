@@ -72,6 +72,18 @@ return [
             'after_commit' => false,
         ],
 
+        'pubsub' => [
+            'driver' => 'pubsub',
+            'queue' => env('PUBSUB_QUEUE', 'default'),
+            'queue_prefix' => env('PUBSUB_QUEUE_PREFIX', ''),
+            'project_id' => env('PUBSUB_PROJECT_ID', 'your-project-id'),
+            'retries' => 3,
+            'request_timeout' => 60,
+            'subscriber' => 'azula-api',
+            'create_topics' => true,
+            'create_subscriptions' => true,
+],
+
     ],
 
     /*
