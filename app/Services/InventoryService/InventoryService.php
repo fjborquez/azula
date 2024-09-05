@@ -5,6 +5,7 @@ namespace App\Services\InventoryService;
 use App\Contracts\Services\InventoryService\InventoryServiceInterface;
 use App\Exceptions\ResourceNotFoundException;
 use App\Models\Inventory;
+use Google\Cloud\PubSub\PubSubClient;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -17,7 +18,10 @@ class InventoryService implements InventoryServiceInterface
             $data['purchase_date'] = now();
         }
 
-        return Inventory::factory()->create($data);
+        $created = Inventory::factory()->create($data);
+
+        $this->changeDetailStatus($created);
+        return $created;
     }
 
     public function getList(): Collection
@@ -36,5 +40,17 @@ class InventoryService implements InventoryServiceInterface
         }
 
         $inventory->update($data);
+    }
+
+    private function changeDetailStatus(Inventory $inventory): void {
+        $pubSub = new PubSubClient();
+        $topic = $pubSub->topic('product-status-update');
+        $topic->publish([
+            'data' => json_encode(
+                [
+                    'text' => 'Product status updated',
+                    'inventory' => [$inventory->toArray()]
+                ])
+        ]);
     }
 }
