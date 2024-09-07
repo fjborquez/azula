@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-         Schema::table('inventories', function(Blueprint $table){
+        Schema::table('inventories', function (Blueprint $table) {
             $table->date('expiration_date')->nullable()->after('purchase_date')->change();
-         });
+        });
     }
 
     /**
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('inventory', function(Blueprint $table){
+        Schema::table('inventory', function (Blueprint $table) {
             $table->date('expiration_date')->after('purchase_date')->change();
-         });
+        });
     }
 };
