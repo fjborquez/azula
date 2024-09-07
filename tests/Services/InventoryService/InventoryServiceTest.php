@@ -5,8 +5,8 @@ namespace Tests\Unit\App\Services\InventoryService;
 use App\Models\Inventory;
 use App\Services\InventoryService\InventoryService;
 use Illuminate\Database\Eloquent\Collection;
-use PHPUnit\Framework\TestCase;
 use Mockery;
+use PHPUnit\Framework\TestCase;
 
 class InventoryServiceTest extends TestCase
 {
@@ -17,7 +17,7 @@ class InventoryServiceTest extends TestCase
         parent::setUp();
 
         // Crear una instancia de InventoryService
-        $this->inventoryService = new InventoryService();
+        $this->inventoryService = new InventoryService;
     }
 
     public function tearDown(): void
@@ -84,7 +84,7 @@ class InventoryServiceTest extends TestCase
             ],
         ]);
 
-        $inventoryMock = Mockery::mock('alias:' . Inventory::class);
+        $inventoryMock = Mockery::mock('alias:'.Inventory::class);
 
         $inventoryMock->shouldReceive('whereHas')
             ->once()
