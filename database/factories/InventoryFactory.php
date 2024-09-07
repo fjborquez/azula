@@ -23,7 +23,6 @@ class InventoryFactory extends Factory
             'uom_id' => fake()->numberBetween(1, 5),
             'uom_abbreviation' => fake()->randomElement(['kg', 'g', 'm', 'cm', 'l']),
             'purchase_date' => fake()->dateTimeBetween('last year', 'today'),
-            'expiration_date' => fake()->dateTimeBetween('next Monday', 'next Monday +7 days'),
             'catalog_id' => fake()->numberBetween(1, 20),
             'catalog_description' => fake()->sentence(),
             'brand_id' => fake()->numberBetween(1, 10),
