@@ -42,4 +42,9 @@ class InventoryController extends Controller
             return response()->noContent(Response::HTTP_NOT_FOUND);
         }
     }
+
+    public function listNotFinalPhaseStatus()
+    {
+        return $this->inventoryService->getInventoryDetailsList();
+    }
 }
