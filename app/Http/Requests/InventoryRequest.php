@@ -23,7 +23,7 @@ class InventoryRequest extends FormRequest
     {
         return [
             'quantity' => ['required'],
-            'expiration_date' => ['after:yesterday'],
+            'expiration_date' => ['sometimes', 'nullable', 'after:yesterday'],
             'catalog_id' => ['required', 'gte:0'],
             'catalog_description' => ['required'],
             'category_id' => ['required'],
