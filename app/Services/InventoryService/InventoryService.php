@@ -20,7 +20,8 @@ class InventoryService implements InventoryServiceInterface
 
         $created = Inventory::factory()->create($data);
 
-        $this->changeDetailStatus($created);
+        $this->changeDetailStatus(new Collection($created));
+
         return $created;
     }
 
@@ -42,15 +43,23 @@ class InventoryService implements InventoryServiceInterface
         $inventory->update($data);
     }
 
-    private function changeDetailStatus(Inventory $inventory): void {
-        $pubSub = new PubSubClient();
+    private function changeDetailStatus(Collection $inventory): void
+    {
+        $pubSub = new PubSubClient;
         $topic = $pubSub->topic('product-status-update');
         $topic->publish([
             'data' => json_encode(
                 [
                     'text' => 'Product status updated',
-                    'inventory' => [$inventory->toArray()]
-                ])
+                    'inventory' => $inventory,
+                ]),
         ]);
+    }
+
+    public function getInventoryDetailsList(): Collection
+    {
+        return Inventory::whereHas('productStatus', function ($query) {
+            $query->where('is_final_phase', false);
+        })->get();
     }
 }
