@@ -45,7 +45,7 @@ class InventoryService implements InventoryServiceInterface
 
     private function changeDetailStatus(Collection $inventory): void
     {
-        if (empty($inventory->details)) {
+        if (empty($inventory)) {
             return;
         }
 
