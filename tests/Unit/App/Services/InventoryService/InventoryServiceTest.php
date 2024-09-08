@@ -9,6 +9,7 @@ use Mockery;
 use PHPUnit\Framework\TestCase;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+
 use function PHPUnit\Framework\assertEquals;
 
 class InventoryServiceTest extends TestCase
@@ -71,7 +72,7 @@ class InventoryServiceTest extends TestCase
             ],
         ]);
 
-        $queryBuilderMock = Mockery::mock('overload:' . QueryBuilder::class);
+        $queryBuilderMock = Mockery::mock('overload:'.QueryBuilder::class);
 
         $queryBuilderMock->expects('for')
             ->with(Inventory::class)
@@ -149,8 +150,6 @@ class InventoryServiceTest extends TestCase
                 'updated_at' => '2024-09-01 23:09:55',
             ],
         ]);
-
-
 
         $this->inventoryMock->expects('whereHas')
             ->with('productStatus', Mockery::on(function ($query) {
