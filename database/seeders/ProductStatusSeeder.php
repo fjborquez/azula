@@ -21,5 +21,11 @@ class ProductStatusSeeder extends Seeder
                 ['id' => 5, 'description' => 'Discarded', 'is_final_phase' => true],
             ]);
         }
+
+        if (DB::table('product_status')->count() == 5) {
+            DB::table('product_status')->insert([
+                ['id' => 6, 'description' => 'Undefined', 'is_final_phase' => false],
+            ]);
+        }
     }
 }

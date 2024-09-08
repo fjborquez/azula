@@ -45,6 +45,10 @@ class InventoryService implements InventoryServiceInterface
 
     private function changeDetailStatus(Collection $inventory): void
     {
+        if (empty($inventory->details)) {
+            return;
+        }
+
         $pubSub = new PubSubClient;
         $topic = $pubSub->topic('product-status-update');
         $topic->publish([
@@ -61,5 +65,10 @@ class InventoryService implements InventoryServiceInterface
         return Inventory::whereHas('productStatus', function ($query) {
             $query->where('is_final_phase', false);
         })->get();
+    }
+
+    public function processInventoryDetailStatusTransitions(): void
+    {
+        $this->changeDetailStatus($this->getInventoryDetailsList());
     }
 }
