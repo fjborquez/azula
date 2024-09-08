@@ -51,7 +51,7 @@ class InventoryService implements InventoryServiceInterface
             'data' => json_encode(
                 [
                     'text' => 'Product status updated',
-                    'inventory' => $inventory,
+                    'inventory' => $inventory->toArray(),
                 ]),
         ]);
     }
