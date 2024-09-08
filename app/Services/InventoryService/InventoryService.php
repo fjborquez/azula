@@ -20,7 +20,7 @@ class InventoryService implements InventoryServiceInterface
 
         $created = Inventory::factory()->create($data);
 
-        $this->changeDetailStatus(new Collection($created));
+        $this->changeDetailStatus(new Collection($created), 1);
 
         return $created;
     }
@@ -43,7 +43,7 @@ class InventoryService implements InventoryServiceInterface
         $inventory->update($data);
     }
 
-    private function changeDetailStatus(Collection $inventory): void
+    private function changeDetailStatus(Collection $inventory, int $processAction): void
     {
         if (empty($inventory)) {
             return;
@@ -54,7 +54,7 @@ class InventoryService implements InventoryServiceInterface
         $topic->publish([
             'data' => json_encode(
                 [
-                    'text' => 'Product status updated',
+                    'process_action' => $processAction,
                     'inventory' => $inventory->toArray(),
                 ]),
         ]);
@@ -69,6 +69,6 @@ class InventoryService implements InventoryServiceInterface
 
     public function processInventoryDetailStatusTransitions(): void
     {
-        $this->changeDetailStatus($this->getInventoryDetailsList());
+        $this->changeDetailStatus($this->getInventoryDetailsList(), 2);
     }
 }
