@@ -22,7 +22,7 @@ class InventoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'quantity' => ['required'],
+            'quantity' => ['required', 'gte:0'],
             'expiration_date' => ['sometimes', 'nullable', 'after:yesterday'],
             'catalog_id' => ['required', 'gte:0'],
             'catalog_description' => ['required'],
