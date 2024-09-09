@@ -22,18 +22,18 @@ class InventoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'quantity' => ['required', 'gte:0'],
+            'quantity' => ['required', 'gt:0'],
             'expiration_date' => ['sometimes', 'nullable', 'after:yesterday'],
-            'catalog_id' => ['required', 'gte:0'],
+            'catalog_id' => ['required', 'gt:0'],
             'catalog_description' => ['required'],
             'category_id' => ['required'],
             'category_name' => ['required'],
             'purchase_date' => [],
-            'brand_id' => ['gte:0'],
+            'brand_id' => ['gt:0'],
             'brand_name' => [],
-            'uom_id' => ['gte:0'],
+            'uom_id' => ['gt:0'],
             'uom_abbreviation' => [],
-            'house_id' => ['gte:0'],
+            'house_id' => ['gt:0'],
             'house_description' => [],
         ];
     }
