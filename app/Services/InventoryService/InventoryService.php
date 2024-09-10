@@ -69,7 +69,6 @@ class InventoryService implements InventoryServiceInterface
 
     public function processInventoryDetailStatusTransitions(): void
     {
-        dd('HOLA');
         $this->changeDetailStatus($this->getInventoryDetailsList(), 2);
     }
 }
