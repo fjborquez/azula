@@ -65,15 +65,16 @@ class InventoryService implements InventoryServiceInterface
         return Inventory::whereHas('productStatus', function ($query) {
             $query->where('is_final_phase', false);
         })
-            ->whereHas('productStatus', function ($query) {
-                $query->wherePivot('product_status_transitions.is_active', true);
-                $query->where(function ($subQuery) {
-                    $subQuery->where('product_status_transitions.product_status_id', 6)
-                        ->whereNotNull('inventories.expiration_date');
-                })
-                    ->orWhere('product_status_id', '!=', 6);
+        ->whereHas('productStatus', function ($query) {
+            $query->wherePivot('product_status_transitions.is_active', true);
+            $query->where(function ($subQuery) {
+                $subQuery->where('product_status_transitions.product_status_id', 6)
+                    ->whereNotNull('inventories.expiration_date');
             })
-            ->orderBy('id');
+                ->orWhere('product_status_id', '!=', 6);
+        })
+        ->orderBy('id')
+        ->get();
     }
 
     public function processInventoryDetailStatusTransitions(): void
