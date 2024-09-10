@@ -73,8 +73,7 @@ class InventoryService implements InventoryServiceInterface
             })
                 ->orWhere('product_status_id', '!=', 6);
         })
-        ->orderBy('id')
-        ->get();
+        ->orderBy('id');
     }
 
     public function processInventoryDetailStatusTransitions(): void
