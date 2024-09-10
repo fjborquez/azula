@@ -69,11 +69,12 @@ class InventoryService implements InventoryServiceInterface
             $query->wherePivot('product_status_transitions.is_active', true);
             $query->where(function ($subQuery) {
                 $subQuery->where('product_status_transitions.product_status_id', 6)
-                            ->whereNotNull('inventories.expiration_date');
+                    ->whereNotNull('inventories.expiration_date');
             })
                 ->orWhere('product_status_id', '!=', 6);
         })
-        ->orderBy('id');
+        ->orderBy('id')
+        ->get();
     }
 
     public function processInventoryDetailStatusTransitions(): void
