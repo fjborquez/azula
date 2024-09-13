@@ -12,4 +12,4 @@ Artisan::command('inspire', function () {
 Schedule::call(function () {
     $inventoryService = app(InventoryService::class);
     $inventoryService->processInventoryDetailStatusTransitions();
-})->everyMinute();
+})->daily()->at('00:00');
