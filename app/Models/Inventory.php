@@ -31,6 +31,6 @@ class Inventory extends Model
     public function productStatus(): BelongsToMany
     {
         return $this->belongsToMany(ProductStatus::class, 'product_status_transitions', 'inventory_id', 'product_status_id')
-            ->withPivot('observations');
+            ->withPivot(['observations', 'is_active']);
     }
 }
