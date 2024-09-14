@@ -62,7 +62,7 @@ class InventoryService implements InventoryServiceInterface
 
     public function getInventoryDetailsList(): Collection
     {
-        return Inventory::whereHas('productStatus', function ($query) {
+        return Inventory::with('productStatus')->whereHas('productStatus', function ($query) {
             $query->where('is_final_phase', false);
         })
             ->whereHas('productStatus', function ($query) {
