@@ -6,6 +6,7 @@ use App\Contracts\Services\InventoryService\InventoryServiceInterface;
 use App\Exceptions\ResourceNotFoundException;
 use App\Models\Inventory;
 use Google\Cloud\PubSub\PubSubClient;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -28,8 +29,14 @@ class InventoryService implements InventoryServiceInterface
     public function getList(): Collection
     {
         return QueryBuilder::for(Inventory::class)
-            ->allowedFilters(AllowedFilter::exact('house_id'))
-            ->get();
+            ->allowedFilters([
+                AllowedFilter::exact('house_id'),
+                AllowedFilter::callback('has_active_product_status', function (Builder $query, $value) {
+                    $query->whereHas('productStatus', function(Builder $subQuery) {
+                        $subQuery->where('is_active', 1);
+                    });
+                })
+            ])->get();
     }
 
     public function update(int $inventoryId, array $data = []): void
