@@ -32,11 +32,11 @@ class InventoryService implements InventoryServiceInterface
             ->allowedFilters([
                 AllowedFilter::exact('house_id'),
                 AllowedFilter::callback('has_active_product_status', function (Builder $query, $value) {
-                    $query->whereHas('productStatus', function(Builder $subQuery) {
+                    $query->whereHas('productStatus', function (Builder $subQuery) {
                         $subQuery->where('is_active', 1);
                         $subQuery->where('is_final_phase', 0);
                     });
-                })
+                }),
             ])->get();
     }
 
