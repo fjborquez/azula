@@ -30,6 +30,7 @@ class InventoryService implements InventoryServiceInterface
     {
         return QueryBuilder::for(Inventory::class)
             ->defaultSorts(['purchase_date', 'expiration_date'])
+            ->allowedIncludes(['productStatus'])
             ->allowedSorts(['purchase_date', 'expiration_date'])
             ->allowedFilters([
                 AllowedFilter::exact('house_id'),
