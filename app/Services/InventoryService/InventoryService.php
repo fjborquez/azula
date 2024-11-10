@@ -19,7 +19,7 @@ class InventoryService implements InventoryServiceInterface
             $data['purchase_date'] = now();
         }
 
-        $created = Inventory::factory()->create($data);
+        $created = Inventory::create($data);
 
         $this->changeDetailStatus(new Collection($created), 1);
 
