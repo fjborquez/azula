@@ -29,6 +29,8 @@ class InventoryService implements InventoryServiceInterface
     public function getList(): Collection
     {
         return QueryBuilder::for(Inventory::class)
+            ->defaultSorts(['purchase_date', 'expiration_date'])
+            ->allowedSorts(['purchase_date', 'expiration_date'])
             ->allowedFilters([
                 AllowedFilter::exact('house_id'),
                 AllowedFilter::callback('has_active_product_status', function (Builder $query, $value) {
