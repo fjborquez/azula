@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use \Exception;
 use App\Contracts\Services\InventoryService\InventoryServiceInterface;
 use App\Exceptions\ResourceNotFoundException;
 use App\Http\Requests\InventoryRequest;
+use Exception;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
