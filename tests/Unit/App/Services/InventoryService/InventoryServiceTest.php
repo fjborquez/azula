@@ -18,20 +18,20 @@ class InventoryServiceTest extends TestCase
 
     private $inventoryMock;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->inventoryService = new InventoryService;
         $this->inventoryMock = Mockery::mock('overload:App\Models\Inventory');
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Mockery::close();
         parent::tearDown();
     }
 
-    public function test_getList_returns_inventories(): void
+    public function test_get_list_returns_inventories(): void
     {
         $expectedInventories = new Collection([
             (object) [
