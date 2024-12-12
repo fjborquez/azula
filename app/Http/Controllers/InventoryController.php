@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Contracts\Services\InventoryService\InventoryServiceInterface;
 use App\Exceptions\ResourceNotFoundException;
 use App\Http\Requests\InventoryRequest;
-use Exception;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class InventoryController extends Controller
@@ -20,15 +18,11 @@ class InventoryController extends Controller
 
     public function store(InventoryRequest $request)
     {
-        try {
-            $validated = $request->safe()->only($this->fields);
-            $inventory = $this->inventoryService->create($validated);
+        $validated = $request->safe()->only($this->fields);
+        $inventory = $this->inventoryService->create($validated);
 
-            return response()->noContent(Response::HTTP_CREATED)
-                ->header('Location', url('/api/user/'.$inventory->id));
-        } catch (Exception $exception) {
-            Log::alert($exception->getMessage());
-        }
+        return response()->noContent(Response::HTTP_CREATED)
+            ->header('Location', url('/api/user/'.$inventory->id));
     }
 
     public function list()
