@@ -31,7 +31,7 @@ class InventoryRequest extends FormRequest
             'purchase_date' => [],
             'brand_id' => [],
             'brand_name' => [],
-            'uom_id' => ['gt:0'],
+            'uom_id' => ['required', 'gt:0'],
             'uom_abbreviation' => [],
             'house_id' => ['gt:0'],
             'house_description' => [],
