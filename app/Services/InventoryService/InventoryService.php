@@ -74,7 +74,7 @@ class InventoryService implements InventoryServiceInterface
         $topic = 'product-status-update';
         $data = [
             'process_action' => $processAction,
-            'inventory' => $inventory->toArray(),
+            'inventory' => [$inventory->toArray()],
         ];
 
         $this->publishToPubSub($topic, $data);
@@ -88,7 +88,7 @@ class InventoryService implements InventoryServiceInterface
 
         $topic = 'product-discarded';
         $data = [
-            'inventory' => $inventory->toArray(),
+            'inventory' => [$inventory->toArray()],
         ];
 
         $this->publishToPubSub($topic, $data);
