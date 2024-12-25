@@ -122,6 +122,6 @@ class InventoryService implements InventoryServiceInterface
     {
         $pubSub = new PubSubClient;
         $topic = $pubSub->topic($topic);
-        $topic->publish($data);
+        $topic->publish(['data' => json_encode($data)]);
     }
 }
