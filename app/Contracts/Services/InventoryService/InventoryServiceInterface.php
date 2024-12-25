@@ -14,4 +14,6 @@ interface InventoryServiceInterface
     public function update(int $inventoryId, array $data = []): void;
 
     public function getInventoryDetailsList(): Collection;
+
+    public function discard(int $inventoryId): void;
 }

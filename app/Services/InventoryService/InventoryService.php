@@ -54,21 +54,44 @@ class InventoryService implements InventoryServiceInterface
         $inventory->update($data);
     }
 
+    public function discard(int $inventoryId): void
+    {
+        $inventory = Inventory::find($inventoryId);
+
+        if ($inventory == null) {
+            throw new ResourceNotFoundException('Inventory detail not found');
+        }
+
+        $this->discardProduct(new Collection($inventory));
+    }
+
     private function changeDetailStatus(Collection $inventory, int $processAction): void
     {
         if (empty($inventory)) {
             return;
         }
 
-        $pubSub = new PubSubClient;
-        $topic = $pubSub->topic('product-status-update');
-        $topic->publish([
-            'data' => json_encode(
-                [
-                    'process_action' => $processAction,
-                    'inventory' => $inventory->toArray(),
-                ]),
-        ]);
+        $topic = 'product-status-update';
+        $data = [
+            'process_action' => $processAction,
+            'inventory' => $inventory->toArray(),
+        ];
+
+        $this->publishToPubSub($topic, $data);
+    }
+
+    private function discardProduct(Collection $inventory): void
+    {
+        if (empty($inventory)) {
+            return;
+        }
+
+        $topic = 'product-discarded';
+        $data = [
+            'inventory' => $inventory->toArray(),
+        ];
+
+        $this->publishToPubSub($topic, $data);
     }
 
     public function getInventoryDetailsList(): Collection
@@ -93,5 +116,12 @@ class InventoryService implements InventoryServiceInterface
     public function processInventoryDetailStatusTransitions(): void
     {
         $this->changeDetailStatus($this->getInventoryDetailsList(), 2);
+    }
+
+    private function publishToPubSub(string $topic, array $data = []): void
+    {
+        $pubSub = new PubSubClient;
+        $topic = $pubSub->topic($topic);
+        $topic->publish(['data' => json_encode($data)]);
     }
 }
