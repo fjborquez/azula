@@ -45,7 +45,7 @@ class InventoryService implements InventoryServiceInterface
 
     public function update(int $inventoryId, array $data = []): void
     {
-        $inventory = Inventory::with('productStatus')->find($inventoryId);
+        $inventory = Inventory::find($inventoryId);
 
         if ($inventory == null) {
             throw new ResourceNotFoundException('Inventory detail not found');
@@ -56,7 +56,7 @@ class InventoryService implements InventoryServiceInterface
 
     public function discard(int $inventoryId): void
     {
-        $inventory = Inventory::find($inventoryId);
+        $inventory = Inventory::with('productStatus')->find($inventoryId);
 
         if ($inventory == null) {
             throw new ResourceNotFoundException('Inventory detail not found');
