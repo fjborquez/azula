@@ -16,4 +16,6 @@ interface InventoryServiceInterface
     public function getInventoryDetailsList(): Collection;
 
     public function discard(int $inventoryId): void;
+
+    public function get(int $inventoryId): Inventory;
 }

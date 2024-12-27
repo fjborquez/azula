@@ -162,4 +162,20 @@ class InventoryServiceTest extends TestCase
         $response = $this->inventoryService->getInventoryDetailsList();
         assertInstanceOf(Collection::class, $response);
     }
+
+    public function test_get_should_return_an_inventory_item_detail(): void
+    {
+        $inventoryMock = Mockery::mock('overload:'.Inventory::class);
+        $inventoryMock->shouldReceive('find')->once()->andReturnSelf();
+        $response = $this->inventoryService->get(1);
+        assertInstanceOf(Inventory::class, $response);
+    }
+
+    public function test_get_should_throws_an_exception_when_inventory_is_not_found(): void
+    {
+        $this->expectException(ResourceNotFoundException::class);
+        $inventoryMock = Mockery::mock('overload:'.Inventory::class);
+        $inventoryMock->shouldReceive('find')->once()->andReturnNull();
+        $this->inventoryService->get(1);
+    }
 }

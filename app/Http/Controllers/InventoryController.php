@@ -62,4 +62,14 @@ class InventoryController extends Controller
             return response()->noContent(Response::HTTP_NOT_FOUND);
         }
     }
+
+    public function get(int $inventoryId)
+    {
+        try {
+            return $this->inventoryService->get($inventoryId);
+        } catch (ResourceNotFoundException $exception) {
+            report($exception);
+            return response()->noContent(Response::HTTP_NOT_FOUND);
+        }
+    }
 }
