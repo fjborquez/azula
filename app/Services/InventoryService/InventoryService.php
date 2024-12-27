@@ -113,6 +113,17 @@ class InventoryService implements InventoryServiceInterface
             ->get();
     }
 
+    public function get(int $inventoryId): Inventory
+    {
+        $inventory = Inventory::find($inventoryId);
+
+        if ($inventory == null) {
+            throw new ResourceNotFoundException('Inventory detail not found');
+        }
+
+        return $inventory;
+    }
+
     public function processInventoryDetailStatusTransitions(): void
     {
         $this->changeDetailStatus($this->getInventoryDetailsList(), 2);
