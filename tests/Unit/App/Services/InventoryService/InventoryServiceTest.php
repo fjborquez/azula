@@ -38,7 +38,7 @@ class InventoryServiceTest extends TestCase
         $pubSubMock->shouldReceive('publish')->andReturnSelf();
         $inventoryMock->shouldReceive('create')->andReturnSelf();
         $response = $this->inventoryService->create([
-            'purchase_date' => now()
+            'purchase_date' => now(),
         ]);
         assertEquals($response, $inventoryMock);
     }
@@ -152,13 +152,13 @@ class InventoryServiceTest extends TestCase
         $this->inventoryService->discard(1);
     }
 
-    public function test_getInventoryDetailsList_should_return_a_collection(): void
+    public function test_get_inventory_details_list_should_return_a_collection(): void
     {
         $inventoryMock = Mockery::mock('overload:'.Inventory::class);
         $inventoryMock->shouldReceive('with')->once()->andReturnSelf();
         $inventoryMock->shouldReceive('whereHas')->andReturnSelf();
         $inventoryMock->shouldReceive('orderBy')->andReturnSelf();
-        $inventoryMock->shouldReceive('get')->andReturn(new Collection());
+        $inventoryMock->shouldReceive('get')->andReturn(new Collection);
         $response = $this->inventoryService->getInventoryDetailsList();
         assertInstanceOf(Collection::class, $response);
     }
