@@ -2,8 +2,10 @@
 
 namespace Tests\Unit\App\Services\InventoryService;
 
+use App\Exceptions\OperationNotAllowedException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Models\Inventory;
+use App\Models\ProductStatusTransition;
 use App\Services\InventoryService\InventoryService;
 use Google\Cloud\PubSub\PubSubClient;
 use Illuminate\Database\Eloquent\Collection;
@@ -134,11 +136,17 @@ class InventoryServiceTest extends TestCase
     public function test_discard_should_discard_an_inventory_item(): void
     {
         $inventoryMock = Mockery::mock('overload:'.Inventory::class);
+        $productStatusCollection = new Collection;
+        $productStatusTransition = new ProductStatusTransition;
         $pubSubMock = Mockery::mock('overload:'.PubSubClient::class);
-        $pubSubMock->shouldReceive('topic')->andReturnSelf();
-        $pubSubMock->shouldReceive('publish')->andReturnSelf();
+        $productStatusTransition->product_status_id = 1;
+        $productStatusTransition->is_active = true;
         $inventoryMock->shouldReceive('with')->once()->andReturnSelf();
         $inventoryMock->shouldReceive('find')->once()->andReturnSelf();
+        $inventoryMock->shouldReceive('productStatus')->andReturn($productStatusCollection);
+        $pubSubMock->shouldReceive('topic')->andReturnSelf();
+        $pubSubMock->shouldReceive('publish')->andReturnSelf();
+        $productStatusCollection->push($productStatusTransition);
         $this->inventoryService->discard(1);
         $this->expectNotToPerformAssertions();
     }
@@ -149,6 +157,32 @@ class InventoryServiceTest extends TestCase
         $inventoryMock = Mockery::mock('overload:'.Inventory::class);
         $inventoryMock->shouldReceive('with')->once()->andReturnSelf();
         $inventoryMock->shouldReceive('find')->once()->andReturnNull();
+        $this->inventoryService->discard(1);
+    }
+
+    public function test_discard_should_throws_exception_when_inventory_is_already_discarded(): void
+    {
+        $this->discard_test_by_status(4);
+    }
+
+    public function test_discard_should_throws_exception_when_inventory_is_already_consumed(): void
+    {
+        $this->discard_test_by_status(5);
+    }
+
+    private function discard_test_by_status(int $statusId)
+    {
+        $this->expectException(OperationNotAllowedException::class);
+        $inventoryMock = Mockery::mock('overload:'.Inventory::class);
+        $productStatusCollection = new Collection;
+        $productStatusTransition = new ProductStatusTransition;
+        $productStatusTransition->product_status_id = $statusId;
+        $productStatusTransition->is_active = true;
+        $inventoryMock->shouldReceive('with')->once()->andReturnSelf();
+        $inventoryMock->shouldReceive('find')->once()->andReturnSelf();
+        $inventoryMock->shouldReceive('productStatus')->andReturn($productStatusCollection);
+        $productStatusCollection->push($productStatusTransition);
+
         $this->inventoryService->discard(1);
     }
 
