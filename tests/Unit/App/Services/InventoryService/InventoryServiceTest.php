@@ -5,12 +5,10 @@ namespace Tests\Unit\App\Services\InventoryService;
 use App\Exceptions\OperationNotAllowedException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Models\Inventory;
-use App\Models\ProductStatus;
 use App\Models\ProductStatusTransition;
 use App\Services\InventoryService\InventoryService;
 use Google\Cloud\PubSub\PubSubClient;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\App;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -138,8 +136,8 @@ class InventoryServiceTest extends TestCase
     public function test_discard_should_discard_an_inventory_item(): void
     {
         $inventoryMock = Mockery::mock('overload:'.Inventory::class);
-        $productStatusCollection = new Collection();
-        $productStatusTransition = new ProductStatusTransition();
+        $productStatusCollection = new Collection;
+        $productStatusTransition = new ProductStatusTransition;
         $pubSubMock = Mockery::mock('overload:'.PubSubClient::class);
         $productStatusTransition->product_status_id = 1;
         $productStatusTransition->is_active = true;
@@ -172,11 +170,12 @@ class InventoryServiceTest extends TestCase
         $this->discard_test_by_status(5);
     }
 
-    private function discard_test_by_status(int $statusId) {
+    private function discard_test_by_status(int $statusId)
+    {
         $this->expectException(OperationNotAllowedException::class);
         $inventoryMock = Mockery::mock('overload:'.Inventory::class);
-        $productStatusCollection = new Collection();
-        $productStatusTransition = new ProductStatusTransition();
+        $productStatusCollection = new Collection;
+        $productStatusTransition = new ProductStatusTransition;
         $productStatusTransition->product_status_id = $statusId;
         $productStatusTransition->is_active = true;
         $inventoryMock->shouldReceive('with')->once()->andReturnSelf();
@@ -213,5 +212,4 @@ class InventoryServiceTest extends TestCase
         $inventoryMock->shouldReceive('find')->once()->andReturnNull();
         $this->inventoryService->get(1);
     }
-
 }
