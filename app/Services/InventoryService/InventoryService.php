@@ -3,8 +3,10 @@
 namespace App\Services\InventoryService;
 
 use App\Contracts\Services\InventoryService\InventoryServiceInterface;
+use App\Exceptions\OperationNotAllowedException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Models\Inventory;
+use App\ProductStatus;
 use Google\Cloud\PubSub\PubSubClient;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -60,6 +62,13 @@ class InventoryService implements InventoryServiceInterface
 
         if ($inventory == null) {
             throw new ResourceNotFoundException('Inventory detail not found');
+        }
+
+        $currentStatus = $inventory->productStatus()->where('is_active', true)->first();
+
+        if ($currentStatus->product_status_id == ProductStatus::CONSUMED->value ||
+            $currentStatus->product_status_id == ProductStatus::DISCARDED->value) {
+            throw new OperationNotAllowedException('The product is already discarded or consumed');
         }
 
         $this->discardProduct(new Collection($inventory));
