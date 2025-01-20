@@ -54,6 +54,8 @@ class InventoryService implements InventoryServiceInterface
         }
 
         $inventory->update($data);
+
+        $this->changeDetailStatus(new Collection($inventory), 1);
     }
 
     public function discard(int $inventoryId): void
