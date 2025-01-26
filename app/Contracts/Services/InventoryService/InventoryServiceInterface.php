@@ -17,5 +17,7 @@ interface InventoryServiceInterface
 
     public function discard(int $inventoryId): void;
 
+    public function consume(int $inventoryId): void;
+
     public function get(int $inventoryId): Inventory;
 }

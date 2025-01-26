@@ -7,6 +7,7 @@ use App\Exceptions\OperationNotAllowedException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Models\Inventory;
 use App\ProductStatus;
+use COM;
 use Google\Cloud\PubSub\PubSubClient;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -76,6 +77,24 @@ class InventoryService implements InventoryServiceInterface
         $this->discardProduct(new Collection($inventory));
     }
 
+    public function consume(int $inventoryId): void
+    {
+        $inventory = Inventory::find($inventoryId);
+
+        if ($inventory == null) {
+            throw new ResourceNotFoundException('Inventory detail not found');
+        }
+
+        $currentStatus = $inventory->productStatus()->where('is_active', true)->first();
+
+        if ($currentStatus->product_status_id == ProductStatus::CONSUMED->value ||
+            $currentStatus->product_status_id == ProductStatus::DISCARDED->value) {
+            throw new OperationNotAllowedException('The product is already discarded or consumed');
+        }
+
+        $this->consumeProduct(new Collection($inventory));
+    }
+
     private function changeDetailStatus(Collection $inventory, int $processAction): void
     {
         if (empty($inventory)) {
@@ -98,6 +117,20 @@ class InventoryService implements InventoryServiceInterface
         }
 
         $topic = 'product-discarded';
+        $data = [
+            'inventory' => [$inventory->toArray()],
+        ];
+
+        $this->publishToPubSub($topic, $data);
+    }
+
+    private function consumeProduct(Collection $inventory): void
+    {
+        if (empty($inventory)) {
+            return;
+        }
+
+        $topic = 'product-consumed';
         $data = [
             'inventory' => [$inventory->toArray()],
         ];
