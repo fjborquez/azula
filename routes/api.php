@@ -8,4 +8,5 @@ Route::get('/inventory', [InventoryController::class, 'list']);
 Route::get('/inventory/{id}', [InventoryController::class, 'get']);
 Route::put('/inventory/{id}', [InventoryController::class, 'update']);
 Route::put('/inventory/{id}/discard', [InventoryController::class, 'discard']);
+Route::put('/inventory/{id}/consume', [InventoryController::class, 'consume']);
 Route::get('/inventory-not-final-phase', [InventoryController::class, 'listNotFinalPhaseStatus']);
