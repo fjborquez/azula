@@ -55,7 +55,11 @@ class InventoryService implements InventoryServiceInterface
 
         $inventory->update($data);
 
-        $this->changeDetailStatus(new Collection($inventory), 1);
+        $currentStatus = $inventory->productStatus()->where('is_active', true)->first();
+
+        if ($currentStatus->product_status_id != ProductStatus::CONSUMED->value) {
+            $this->changeDetailStatus(new Collection($inventory), 1);
+        }
     }
 
     public function discard(int $inventoryId): void
