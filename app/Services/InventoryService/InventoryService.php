@@ -7,7 +7,6 @@ use App\Exceptions\OperationNotAllowedException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Models\Inventory;
 use App\ProductStatus;
-use COM;
 use Google\Cloud\PubSub\PubSubClient;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
