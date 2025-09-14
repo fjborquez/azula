@@ -80,7 +80,7 @@ class InventoryService implements InventoryServiceInterface
 
     public function consume(int $inventoryId): void
     {
-        $inventory = Inventory::find($inventoryId);
+        $inventory = Inventory::with('productStatus')->find($inventoryId);
 
         if ($inventory == null) {
             throw new ResourceNotFoundException('Inventory detail not found');
