@@ -119,8 +119,13 @@ class InventoryServiceTest extends TestCase
     public function test_update_should_update_an_inventory(): void
     {
         $inventoryMock = Mockery::mock('overload:'.Inventory::class);
+        $pubSubMock = Mockery::mock('overload:'.PubSubClient::class);
         $inventoryMock->shouldReceive('update')->andReturnSelf();
         $inventoryMock->shouldReceive('find')->once()->andReturnSelf();
+        $inventoryMock->shouldReceive('productStatus')->andReturn(new Collection);
+        $pubSubMock->shouldReceive('topic')->andReturnSelf();
+        $pubSubMock->shouldReceive('publish')->andReturnSelf();
+
         $this->inventoryService->update(1, []);
         $this->expectNotToPerformAssertions();
     }
@@ -201,6 +206,7 @@ class InventoryServiceTest extends TestCase
     {
         $inventoryMock = Mockery::mock('overload:'.Inventory::class);
         $inventoryMock->shouldReceive('find')->once()->andReturnSelf();
+        $inventoryMock->shouldReceive('with')->andReturnSelf();
         $response = $this->inventoryService->get(1);
         assertInstanceOf(Inventory::class, $response);
     }
@@ -209,7 +215,53 @@ class InventoryServiceTest extends TestCase
     {
         $this->expectException(ResourceNotFoundException::class);
         $inventoryMock = Mockery::mock('overload:'.Inventory::class);
+        $inventoryMock->shouldReceive('with')->andReturnSelf();
         $inventoryMock->shouldReceive('find')->once()->andReturnNull();
         $this->inventoryService->get(1);
+    }
+
+    public function test_consume_should_not_allow_operation_when_inventory_is_consumed(): void
+    {
+        $inventoryId = 1;
+        $productStatusTransitions = new Collection;
+        $productStatusTransition = new ProductStatusTransition;
+        $productStatusTransition->product_status_id = 5;
+        $productStatusTransition->is_active = true;
+        $productStatusTransitions->push($productStatusTransition);
+        $this->expectException(OperationNotAllowedException::class);
+        $inventoryMock = Mockery::mock('overload:'.Inventory::class);
+        $inventoryMock->shouldReceive('with')->andReturnSelf();
+        $inventoryMock->shouldReceive('find')->andReturnSelf();
+        $inventoryMock->shouldReceive('productStatus')->andReturn($productStatusTransitions);
+        $this->inventoryService->consume($inventoryId);
+    }
+
+    public function test_consume_should_not_find_resource_when_inventory_is_null(): void
+    {
+        $inventoryId = 1;
+        $this->expectException(ResourceNotFoundException::class);
+        $inventoryMock = Mockery::mock('overload:'.Inventory::class);
+        $inventoryMock->shouldReceive('with')->andReturnSelf();
+        $inventoryMock->shouldReceive('find')->andReturnNull();
+        $this->inventoryService->consume($inventoryId);
+    }
+
+    public function test_consume_should_publish_consumed_inventory(): void
+    {
+        $inventoryId = 1;
+        $productStatusTransitions = new Collection;
+        $productStatusTransition = new ProductStatusTransition;
+        $productStatusTransition->product_status_id = 1;
+        $productStatusTransition->is_active = true;
+        $productStatusTransitions->push($productStatusTransition);
+        $inventoryMock = Mockery::mock('overload:'.Inventory::class);
+        $pubSubClientMock = Mockery::mock('overload:'.PubSubClient::class);
+        $inventoryMock->shouldReceive('with')->andReturnSelf();
+        $inventoryMock->shouldReceive('find')->andReturnSelf();
+        $inventoryMock->shouldReceive('productStatus')->andReturn($productStatusTransitions);
+        $pubSubClientMock->shouldReceive('topic')->andReturnSelf();
+        $pubSubClientMock->shouldReceive('publish')->andReturnSelf();
+        $this->inventoryService->consume($inventoryId);
+        $this->expectNotToPerformAssertions();
     }
 }
