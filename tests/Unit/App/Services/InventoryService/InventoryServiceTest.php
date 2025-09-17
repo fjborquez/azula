@@ -7,14 +7,14 @@ use App\Exceptions\ResourceNotFoundException;
 use App\Models\Inventory;
 use App\Models\ProductStatusTransition;
 use App\Services\InventoryService\InventoryService;
-use function PHPUnit\Framework\assertEquals;
-use function PHPUnit\Framework\assertInstanceOf;
 use Google\Cloud\PubSub\PubSubClient;
 use Illuminate\Database\Eloquent\Collection;
 use Mockery;
-
 use PHPUnit\Framework\TestCase;
 use Spatie\QueryBuilder\QueryBuilder;
+
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertInstanceOf;
 
 class InventoryServiceTest extends TestCase
 {
@@ -264,5 +264,4 @@ class InventoryServiceTest extends TestCase
         $this->inventoryService->consume($inventoryId);
         $this->expectNotToPerformAssertions();
     }
-
 }
