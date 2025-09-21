@@ -5,8 +5,8 @@ namespace Tests\Unit\App\Services\InventoryService;
 use App\Exceptions\OperationNotAllowedException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Models\Inventory;
-use App\Models\ProductStatusTransition;
 use App\Models\ProductStatus;
+use App\Models\ProductStatusTransition;
 use App\Services\InventoryService\InventoryService;
 use Google\Cloud\PubSub\PubSubClient;
 use Illuminate\Database\Eloquent\Collection;
@@ -196,10 +196,11 @@ class InventoryServiceTest extends TestCase
     {
         $inventoryMock = Mockery::mock('overload:'.Inventory::class);
         $inventoryMock->shouldReceive('with')->once()->andReturnSelf();
-        $inventoryMock->shouldReceive('whereHas')->with('productStatus', Mockery::on(function($query) {
+        $inventoryMock->shouldReceive('whereHas')->with('productStatus', Mockery::on(function ($query) {
             $productStatusMock = Mockery::mock('overload:'.ProductStatus::class);
             $productStatusMock->shouldReceive('where')->once()->andReturnSelf();
             $query($productStatusMock);
+
             return is_callable($query);
         }))->andReturnSelf();
         $inventoryMock->shouldReceive('orderBy')->andReturnSelf();
