@@ -124,6 +124,7 @@ class InventoryServiceTest extends TestCase
         $inventoryMock->shouldReceive('update')->andReturnSelf();
         $inventoryMock->shouldReceive('find')->once()->andReturnSelf();
         $inventoryMock->shouldReceive('productStatus')->andReturn(new Collection);
+        $inventoryMock->shouldReceive('replicate')->andReturnSelf();
         $pubSubMock->shouldReceive('topic')->andReturnSelf();
         $pubSubMock->shouldReceive('publish')->andReturnSelf();
 
@@ -136,6 +137,7 @@ class InventoryServiceTest extends TestCase
         $this->expectException(ResourceNotFoundException::class);
         $inventoryMock = Mockery::mock('overload:'.Inventory::class);
         $inventoryMock->shouldReceive('find')->once()->andReturnNull();
+        $inventoryMock->shouldReceive('replicate')->andReturnSelf();
         $this->inventoryService->update(1, []);
     }
 
