@@ -47,7 +47,7 @@ class InventoryService implements InventoryServiceInterface
 
     public function update(int $inventoryId, array $data = []): void
     {
-        $inventory = Inventory::find($inventoryId);
+        $inventory = Inventory::with('productStatus')->find($inventoryId);
 
         if ($inventory == null) {
             throw new ResourceNotFoundException('Inventory detail not found');
