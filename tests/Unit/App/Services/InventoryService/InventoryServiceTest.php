@@ -125,6 +125,7 @@ class InventoryServiceTest extends TestCase
         $inventoryMock->shouldReceive('find')->once()->andReturnSelf();
         $inventoryMock->shouldReceive('productStatus')->andReturn(new Collection);
         $inventoryMock->shouldReceive('replicate')->andReturnSelf();
+        $inventoryMock->shouldReceive('with')->andReturnSelf();
         $pubSubMock->shouldReceive('topic')->andReturnSelf();
         $pubSubMock->shouldReceive('publish')->andReturnSelf();
 
@@ -138,6 +139,7 @@ class InventoryServiceTest extends TestCase
         $inventoryMock = Mockery::mock('overload:'.Inventory::class);
         $inventoryMock->shouldReceive('find')->once()->andReturnNull();
         $inventoryMock->shouldReceive('replicate')->andReturnSelf();
+        $inventoryMock->shouldReceive('with')->andReturnSelf();
         $this->inventoryService->update(1, []);
     }
 
