@@ -108,10 +108,17 @@ class InventoryService implements InventoryServiceInterface
             return;
         }
 
+        $currentInventory = $inventory->toArray();
+
+        if (property_exists($inventory, 'mergedId')) {
+            $currentInventory['merged_id'] = $inventory->mergedId;
+            $currentInventory['old_inventory'] = $inventory->oldInventory->toArray();
+        }
+
         $topic = 'product-status-update';
         $data = [
             'process_action' => $processAction,
-            'inventory' => $inventory->toArray(),
+            'inventory' => $currentInventory,
         ];
 
         $this->publishToPubSub($topic, $data);
