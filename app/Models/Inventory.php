@@ -12,6 +12,10 @@ class Inventory extends Model
 
     protected $table = 'inventories';
 
+    public $oldInventory;
+
+    public $mergedId;
+
     protected $fillable = [
         'house_id',
         'house_description',
@@ -28,9 +32,21 @@ class Inventory extends Model
         'category_name',
     ];
 
+    protected $appends = ['mergedId', 'oldInventory'];
+
     public function productStatus(): BelongsToMany
     {
         return $this->belongsToMany(ProductStatus::class, 'product_status_transitions', 'inventory_id', 'product_status_id')
             ->withPivot(['observations', 'is_active']);
+    }
+
+    public function getMergedIdAttribute()
+    {
+        return $this->mergedId;
+    }
+
+    public function getOldInventoryAttribute()
+    {
+        return $this->oldInventory;
     }
 }
