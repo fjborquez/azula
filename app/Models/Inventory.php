@@ -13,6 +13,7 @@ class Inventory extends Model
     protected $table = 'inventories';
 
     public $oldInventory;
+
     public $mergedId;
 
     protected $fillable = [
