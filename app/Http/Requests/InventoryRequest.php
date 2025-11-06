@@ -35,6 +35,7 @@ class InventoryRequest extends FormRequest
             'uom_abbreviation' => [],
             'house_id' => ['gt:0'],
             'house_description' => [],
+            'merged_id' => ['gt:0']
         ];
     }
 
