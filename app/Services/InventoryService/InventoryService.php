@@ -57,8 +57,8 @@ class InventoryService implements InventoryServiceInterface
 
         if (array_key_exists('merged_id', $data)) {
             $oldInventory = $inventory->replicate();
-            $inventory->oldInventory = $oldInventory;
-            $inventory->mergedId = $data['merged_id'];
+            $inventory->old_inventory = $oldInventory;
+            $inventory->merged_id = $data['merged_id'];
         }
 
         $currentStatus = $inventory->productStatus()->where('is_active', true)->first();
