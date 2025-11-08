@@ -18,4 +18,4 @@ Schedule::call(function () {
 Schedule::call(function () {
     $mailService = app(MailService::class);
     $mailService->send();
-})->everyMinute();
+})->dailyAt('6:00');
