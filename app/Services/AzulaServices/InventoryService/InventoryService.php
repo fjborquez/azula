@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\InventoryService;
+namespace App\Services\AzulaServices\InventoryService;
 
 use App\Contracts\Services\InventoryService\InventoryServiceInterface;
 use App\Exceptions\OperationNotAllowedException;

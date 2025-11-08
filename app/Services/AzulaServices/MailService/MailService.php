@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\MailService;
+namespace App\Services\AzulaServices\MailService;
 
 use App\Contracts\Services\AangServices\HouseServiceInterface;
 use App\Contracts\Services\MailService\MailServiceInterface;
