@@ -6,8 +6,8 @@ use App\Contracts\Services\AangServices\HouseServiceInterface;
 use App\Contracts\Services\MailService\MailServiceInterface;
 use App\Mail\ExpiredInventory;
 use App\Models\Inventory;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class MailService implements MailServiceInterface
 {
@@ -19,7 +19,7 @@ class MailService implements MailServiceInterface
     {
         $housesIds = Inventory::select('house_id')->distinct()->pluck('house_id');
 
-        foreach($housesIds as $houseId) {
+        foreach ($housesIds as $houseId) {
             $houseResponse = $this->houseService->get($houseId);
 
             if ($houseResponse->failed()) {
@@ -48,7 +48,7 @@ class MailService implements MailServiceInterface
                 Mail::to($person['user']['email'])->send(new ExpiredInventory(
                     $inventories, $person, $houseData));
             } catch (\Exception $e) {
-                Log::error('Error al enviar correo: ' . $e->getMessage());
+                Log::error('Error al enviar correo: '.$e->getMessage());
             }
         }
     }
