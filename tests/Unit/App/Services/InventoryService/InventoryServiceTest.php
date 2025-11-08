@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Unit\App\Services\InventoryService;
+namespace Tests\Unit\App\Services\AzulaServices\InventoryService;
 
 use App\Exceptions\OperationNotAllowedException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Models\Inventory;
 use App\Models\ProductStatus;
 use App\Models\ProductStatusTransition;
-use App\Services\InventoryService\InventoryService;
+use App\Services\AzulaServices\InventoryService\InventoryService;
 use Google\Cloud\PubSub\PubSubClient;
 use Illuminate\Database\Eloquent\Collection;
 use Mockery;

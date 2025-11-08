@@ -14,7 +14,7 @@
     </testsuites>
     <source>
         <include>
-            <directory>app/Services</directory>
+            <directory>app/Services/AzulaServices</directory>
         </include>
     </source>
     <php>
