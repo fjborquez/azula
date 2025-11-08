@@ -40,6 +40,10 @@ class MailService implements MailServiceInterface
                 ->whereBetween('expiration_date', [now(), now()->addDays(5)])
                 ->get();
 
+            if ($inventories->isEmpty() || is_null($person)) {
+                continue;
+            }
+
             try {
                 Mail::to($person['user']['email'])->send(new ExpiredInventory(
                     $inventories, $person, $houseData));
