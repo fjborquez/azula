@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\InventoryService\InventoryService;
+use App\Services\MailService\MailService;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
@@ -13,3 +14,8 @@ Schedule::call(function () {
     $inventoryService = app(InventoryService::class);
     $inventoryService->processInventoryDetailStatusTransitions();
 })->dailyAt('00:00');
+
+Schedule::call(function () {
+    $mailService = app(MailService::class);
+    $mailService->send();
+})->dailyAt('08:00');
