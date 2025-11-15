@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\Services\InventoryService\InventoryServiceInterface;
+use App\Contracts\Services\AzulaServices\InventoryService\InventoryServiceInterface;
 use App\Exceptions\ResourceNotFoundException;
 use App\Http\Requests\InventoryRequest;
 use Symfony\Component\HttpFoundation\Response;

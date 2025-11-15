@@ -2,6 +2,6 @@
 
 return [
     App\Providers\AppServiceProvider::class,
-    App\Providers\InventoryServiceProvider::class,
+    App\Providers\AzulaServices\InventoryServiceProvider::class,
     App\Providers\AangServices\HouseServiceProvider::class,
 ];
