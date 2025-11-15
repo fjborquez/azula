@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts\Services\InventoryService;
+namespace App\Contracts\Services\AzulaServices\InventoryService;
 
 use App\Models\Inventory;
 use Illuminate\Database\Eloquent\Collection;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts\Services\MailService;
+namespace App\Contracts\Services\AzulaServices\MailService;
 
 interface MailServiceInterface
 {

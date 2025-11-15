@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers\AzulaServices;
 
-use App\Contracts\Services\InventoryService\InventoryServiceInterface;
-use App\Services\InventoryService\InventoryService;
+use App\Contracts\Services\AzulaServices\InventoryService\InventoryServiceInterface;
+use App\Services\AzulaServices\InventoryService\InventoryService;
 use Illuminate\Support\ServiceProvider;
 
 class InventoryServiceProvider extends ServiceProvider

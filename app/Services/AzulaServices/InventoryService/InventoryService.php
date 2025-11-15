@@ -2,7 +2,7 @@
 
 namespace App\Services\AzulaServices\InventoryService;
 
-use App\Contracts\Services\InventoryService\InventoryServiceInterface;
+use App\Contracts\Services\AzulaServices\InventoryService\InventoryServiceInterface;
 use App\Exceptions\OperationNotAllowedException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Models\Inventory;
