@@ -2,19 +2,20 @@
 
 namespace Tests\Unit\App\Services\AzulaServices\MailService;
 
-use App\Services\AzulaServices\MailService\MailService;
-use PHPUnit\Framework\TestCase;
 use App\Contracts\Services\AangServices\HouseServiceInterface;
-use Mockery;
 use App\Models\Inventory;
-use Illuminate\Http\Client\Response;
+use App\Services\AzulaServices\MailService\MailService;
 use GuzzleHttp\Psr7\Response as Psr7Response;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Client\Response;
+use Mockery;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
 class MailServiceTest extends TestCase
 {
     private $mailService;
+
     private $mockedHouseService;
 
     protected function setUp(): void
@@ -41,11 +42,11 @@ class MailServiceTest extends TestCase
         $mockedInventory->shouldReceive('where')->andReturnSelf();
         $mockedInventory->shouldReceive('whereBetween')->andReturnSelf();
         $mockedInventory->shouldReceive('get')->andReturn(Collection::make([
-            new Inventory()
+            new Inventory,
         ]));
 
         $data = ['persons' => [
-            ['user' => ['email' => 'test@example.com']]
+            ['user' => ['email' => 'test@example.com']],
         ]];
 
         $this->mockedHouseService->shouldReceive('get')->andReturn(
@@ -80,7 +81,7 @@ class MailServiceTest extends TestCase
         $mockedInventory->shouldReceive('where')->andReturnSelf();
         $mockedInventory->shouldReceive('whereBetween')->andReturnSelf();
         $mockedInventory->shouldReceive('get')->andReturn(Collection::make([
-            new Inventory()
+            new Inventory,
         ]));
 
         $data = ['persons' => []];
@@ -100,11 +101,11 @@ class MailServiceTest extends TestCase
         $mockedInventory->shouldReceive('where')->andReturnSelf();
         $mockedInventory->shouldReceive('whereBetween')->andReturnSelf();
         $mockedInventory->shouldReceive('get')->andReturn(Collection::make([
-            new Inventory()
+            new Inventory,
         ]));
 
         $data = ['persons' => [
-            ['user' => ['email' => 'test@example.com']]
+            ['user' => ['email' => 'test@example.com']],
         ]];
         $this->mockedHouseService->shouldReceive('get')->andReturn(
             new Response(new Psr7Response(HttpFoundationResponse::HTTP_OK, [], json_encode($data))));
