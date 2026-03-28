@@ -53,7 +53,7 @@ class InventoryService implements InventoryServiceInterface
             throw new ResourceNotFoundException('Inventory detail not found');
         }
 
-        if (array_key_exists('merged_id', $data)) {
+        if (array_key_exists('merged_id', $data) && $data['merged_id'] != null) {
             $oldInventory = $inventory->replicate();
             $inventory->old_inventory = $oldInventory;
             $inventory->merged_id = $data['merged_id'];
