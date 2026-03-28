@@ -1,7 +1,11 @@
 <?php
 
+use App\Providers\AangServices\HouseServiceProvider;
+use App\Providers\AppServiceProvider;
+use App\Providers\AzulaServices\InventoryServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\AzulaServices\InventoryServiceProvider::class,
-    App\Providers\AangServices\HouseServiceProvider::class,
+    AppServiceProvider::class,
+    InventoryServiceProvider::class,
+    HouseServiceProvider::class,
 ];
