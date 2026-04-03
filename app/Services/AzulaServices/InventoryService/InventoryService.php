@@ -31,10 +31,10 @@ class InventoryService implements InventoryServiceInterface
     public function getList(): Collection
     {
         return QueryBuilder::for(Inventory::class)
-            ->defaultSorts(['purchase_date', 'expiration_date'])
-            ->allowedIncludes(['productStatus'])
-            ->allowedSorts(['purchase_date', 'expiration_date'])
-            ->allowedFilters([
+            ->defaultSorts('purchase_date', 'expiration_date')
+            ->allowedIncludes('productStatus')
+            ->allowedSorts('purchase_date', 'expiration_date')
+            ->allowedFilters(
                 AllowedFilter::exact('house_id'),
                 AllowedFilter::callback('has_active_product_status', function (Builder $query, $value) {
                     $query->whereHas('productStatus', function (Builder $subQuery) {
@@ -42,7 +42,7 @@ class InventoryService implements InventoryServiceInterface
                         $subQuery->where('is_final_phase', 0);
                     });
                 }),
-            ])->get();
+            )->get();
     }
 
     public function update(int $inventoryId, array $data = []): void
