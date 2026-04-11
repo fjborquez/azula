@@ -1,7 +1,7 @@
 <?php
 
-use App\Services\InventoryService;
-use App\Services\MailService;
+use App\Services\AzulaServices\InventoryService\InventoryService;
+use App\Services\AzulaServices\MailService\MailService;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
@@ -13,7 +13,7 @@ Artisan::command('inspire', function () {
 Schedule::call(function () {
     $inventoryService = app(InventoryService::class);
     $inventoryService->processInventoryDetailStatusTransitions();
-//})->dailyAt('00:00');
+    // })->dailyAt('00:00');
 })->everyMinute();
 
 Schedule::call(function () {
