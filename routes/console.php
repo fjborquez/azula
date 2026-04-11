@@ -13,7 +13,7 @@ Artisan::command('inspire', function () {
 Schedule::call(function () {
     $inventoryService = app(InventoryService::class);
     $inventoryService->processInventoryDetailStatusTransitions();
-//})->dailyAt('00:00');
+    // })->dailyAt('00:00');
 })->everyMinute();
 
 Schedule::call(function () {
