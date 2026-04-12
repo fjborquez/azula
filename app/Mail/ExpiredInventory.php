@@ -29,7 +29,7 @@ class ExpiredInventory extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Urgent: Use Your Expiring Pantry Items in '.($this->houseData['description'] ?? 'Your House'),
+            subject: 'Tienes productos que caducarán pronto en '.($this->houseData['description'] ?? 'tu casa'),
         );
     }
 
