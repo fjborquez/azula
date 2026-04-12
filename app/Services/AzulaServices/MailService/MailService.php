@@ -3,7 +3,7 @@
 namespace App\Services\AzulaServices\MailService;
 
 use App\Contracts\Services\AangServices\HouseServiceInterface;
-use App\Contracts\Services\MailService\MailServiceInterface;
+use App\Contracts\Services\AzulaServices\MailService\MailServiceInterface;
 use App\Mail\ExpiredInventory;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\Log;
