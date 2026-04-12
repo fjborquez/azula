@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <title>Tienes productos que caducarán pronto en {{ $this->houseData['description'] ?? 'tu casa' }}</title>
+    <title>Tienes productos que caducarán pronto en {{ $houseData['description'] ?? 'tu casa' }}</title>
     <body>
         <h1>Hola {{ $person['name'] }} {{ $person['lastname'] }},</h1>
         <p>Queremos informarte que algunos productos en <b>{{ $houseData['description'] }}</b> están pronto a caducar en los próximos días</p>
